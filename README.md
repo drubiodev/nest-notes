@@ -53,3 +53,5 @@ git init
 git add .
 git commit -m "Initial commit"
 ```
+
+5. If you have a git repo push your changes.

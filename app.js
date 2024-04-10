@@ -1,29 +1,68 @@
 // variables
-const noteTitle = document.querySelector("#note-title");
-const noteText = document.querySelector("#note-text");
-const addNoteButton = document.querySelector("#add-note-btn");
-const notesList = document.querySelector("#notes-list");
+const NoteWrapper = document.querySelector("main");
+const noteTitle = document.getElementById("note-title");
+const noteText = document.getElementById("note-text");
+const addNoteButton = document.getElementById("add-note-btn");
+const saveNoteButton = document.getElementById("save-note-btn");
+const notesList = document.getElementById("notes-list");
 const notes = [];
 
 // adding a note
 addNoteButton.addEventListener("click", () => {
+  // create a note
   const note = new Note();
-  notes.push(note);
+  // add note to the notes array
+  notes[note.id] = note;
+  // add note to the UI
   AddNoteToUI(note);
+  // view the note
   ViewNote(note.id);
+});
+
+// saving a note
+saveNoteButton.addEventListener("click", () => {
+  console.log("save note button clicked");
+  // get id of the note
+  const id = NoteWrapper.getAttribute("data-note-id");
+  // get the note
+  const note = notes[id];
+  // update the note
+  note.title = noteTitle.textContent;
+  note.content = noteText.value;
+  note.UpdateOnDateChange();
+  // update the title div on the li
+  const li = document.querySelector(`li[data-id="${id}"]`);
+  li.querySelector("div").textContent = note.title;
+});
+
+// action buttons clicked
+notesList.addEventListener("click", (e) => {
+  const target = e.target;
+  if (target.tagName === "BUTTON") {
+    const parent = target.parentElement;
+    const id = parent.getAttribute("data-id");
+    const note = notes[id];
+
+    if (target.textContent === "View") {
+      ViewNote(note.id);
+    } else if (target.textContent === "Delete") {
+      delete notes[id];
+      parent.remove();
+    }
+  }
 });
 
 class Note {
   constructor() {
     this.title = "Untitled";
-    this.note = null;
+    this.content = null;
     this.id = this.#CreateID();
     this.createdAtDate = this.#GetCurrentDateAndTime();
     this.updatedAtDate = null;
   }
 
   #CreateID() {
-    return Math.random().toString(36).substr(2, 9);
+    return Math.random().toString(36).substring(2, 10);
   }
 
   #GetCurrentDateAndTime() {
@@ -41,7 +80,22 @@ class Note {
  */
 function AddNoteToUI(note) {
   const li = document.createElement("li");
-  li.textContent = note.title;
+  // create div to place title
+  const titleDiv = document.createElement("div");
+  titleDiv.textContent = note.title;
+
+  // add view button
+  const viewButton = document.createElement("button");
+  viewButton.textContent = "View";
+
+  // add delete button
+  const deleteButton = document.createElement("button");
+  deleteButton.textContent = "Delete";
+
+  li.setAttribute("data-id", note.id);
+  li.appendChild(titleDiv);
+  li.appendChild(viewButton);
+  li.appendChild(deleteButton);
 
   notesList.appendChild(li);
 }
@@ -50,7 +104,8 @@ function AddNoteToUI(note) {
  * @param {string} id - The id of the note to be viewed
  */
 function ViewNote(id) {
-  const note = notes.find((note) => note.id === id);
-  noteText.value = note.note;
+  const note = notes[id];
+  noteText.value = note.content;
   noteTitle.textContent = note.title;
+  NoteWrapper.setAttribute("data-note-id", note.id);
 }
