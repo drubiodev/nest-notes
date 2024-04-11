@@ -55,3 +55,35 @@ git commit -m "Initial commit"
 ```
 
 5. If you have a git repo push your changes.
+
+### Debuging
+
+#### JavaScript
+
+- Use `console.log()` to print values to the console for debugging purposes.
+
+```javascript
+console.log("Note created successfully!");
+```
+
+- Use `debugger` to pause the execution of your code and inspect the current state.
+
+```javascript
+const appName = "Nest Notes";
+
+debugger;
+```
+
+#### Chrome DevTools
+
+- Use the Chrome DevTools to inspect and debug your JavaScript code.
+
+- Open the Chrome DevTools by right-clicking on your web page and selecting "Inspect" or pressing `Ctrl + Shift + I` for windows or `Cmd + Option + I` for Mac.
+
+- Navigate to the "Console" tab to view logs and errors.
+
+#### VS Code Debugger
+
+- Use the VS Code Debugger to set breakpoints and step through your code.
+
+- Open the VS Code Debugger by clicking on the "Run and Debug" icon in the sidebar or pressing `F5`.
