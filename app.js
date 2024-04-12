@@ -12,6 +12,26 @@ for (const id in notes) {
   AddNoteToUI(notes[id]);
 }
 
+// // call api to get notes
+// fetch("http://localhost:8000/notes", {
+//   method: "GET",
+//   headers: {
+//     "Content-Type": "application/json",
+//   },
+// })
+//   .then((res) => res.json())
+//   .then((data) => {
+//     localStorage.setItem("notes", JSON.stringify(data));
+//   })
+//   .then(() => {
+//     for (const id in notes) {
+//       AddNoteToUI(notes[id]);
+//     }
+//   })
+//   .catch((err) => {
+//     console.log(err);
+//   });
+
 // adding a note
 addNoteButton.addEventListener("click", () => {
   // create a note
@@ -63,6 +83,15 @@ notesList.addEventListener("click", (e) => {
   }
 });
 
+/**
+ * @class Note
+ * @property {string} title - The title of the note
+ * @property {string} content - The content of the note
+ * @property {string} id - The id of the note
+ * @property {string} createdAtDate - The date and time the note was created
+ * @property {string} updatedAtDate - The date and time the note was last updated
+ * @method UpdateOnDateChange - Updates the updatedAtDate property of the note
+ */
 class Note {
   constructor() {
     this.title = "Untitled";
