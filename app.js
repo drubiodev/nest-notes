@@ -5,7 +5,12 @@ const noteText = document.getElementById("note-text");
 const addNoteButton = document.getElementById("add-note-btn");
 const saveNoteButton = document.getElementById("save-note-btn");
 const notesList = document.getElementById("notes-list");
-const notes = [];
+const notes = JSON.parse(localStorage.getItem("notes")) || {};
+
+// load notes from localStorage
+for (const id in notes) {
+  AddNoteToUI(notes[id]);
+}
 
 // adding a note
 addNoteButton.addEventListener("click", () => {
@@ -13,6 +18,8 @@ addNoteButton.addEventListener("click", () => {
   const note = new Note();
   // add note to the notes array
   notes[note.id] = note;
+  // save notes to localStorage
+  localStorage.setItem("notes", JSON.stringify(notes));
   // add note to the UI
   AddNoteToUI(note);
   // view the note
@@ -30,6 +37,8 @@ saveNoteButton.addEventListener("click", () => {
   note.title = noteTitle.textContent;
   note.content = noteText.value;
   note.UpdateOnDateChange();
+  // save notes to localStorage
+  localStorage.setItem("notes", JSON.stringify(notes));
   // update the title div on the li
   const li = document.querySelector(`li[data-id="${id}"]`);
   li.querySelector("div").textContent = note.title;
@@ -47,6 +56,8 @@ notesList.addEventListener("click", (e) => {
       ViewNote(note.id);
     } else if (target.textContent === "Delete") {
       delete notes[id];
+      // save notes to localStorage
+      localStorage.setItem("notes", JSON.stringify(notes));
       parent.remove();
     }
   }
