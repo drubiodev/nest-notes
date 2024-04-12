@@ -8,7 +8,19 @@
             "type": "msedge",
             "request": "launch",
             "name": "Open index.html",
-            "file": "c:\\Users\\drubi\\source\\repos\\nest-notes\\index.html"
+            "file": "${workspaceFolder}\\index.html"
+        },
+        {
+            "type": "node",
+            "request": "launch",
+            "name": "Launch Server",
+            "program": "${workspaceFolder}\\api\\server.js"
+        }
+    ],
+    "compounds": [
+        {
+            "name": "Launch Both",
+            "configurations": ["Open index.html", "Launch Server"]
         }
     ]
 }
