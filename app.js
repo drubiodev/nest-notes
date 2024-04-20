@@ -149,3 +149,29 @@ function ViewNote(id) {
   noteTitle.textContent = note.title;
   NoteWrapper.setAttribute("data-note-id", note.id);
 }
+
+const searchInput = document.getElementById("search-input");
+
+searchInput.addEventListener("keyup", searchNotes);
+
+// search through notes
+// function searchNotes() {
+//   const filterWords = searchInput.value.toUpperCase().split(' ');
+//   const ul = document.getElementById("notes-list");
+//   const li = ul.getElementsByTagName("li");
+
+//   for (let i = 0; i < li.length; i++) {
+//     const id = li[i].getAttribute("data-id");
+//     const note = notes[id];
+//     const title = note.title.toUpperCase();
+//     const content = note.content ? note.content.toUpperCase() : '';
+
+//     const noteText = title + ' ' + content;
+
+//     if (filterWords.some(word => noteText.indexOf(word) > -1)) {
+//       li[i].style.display = "";
+//     } else {
+//       li[i].style.display = "none";
+//     }
+//   }
+// }
