@@ -55,7 +55,7 @@ saveNoteButton.addEventListener("click", () => {
   const note = new Note(notes[id]);
   // update the note
   note.title = noteTitle.textContent;
-  note.content = noteText.value;
+  note.content = noteText.innerText;
 
   note.Save();
 
@@ -157,7 +157,7 @@ function AddNoteToUI(note) {
  */
 function ViewNote(id) {
   const note = notes[id];
-  noteText.value = note.content;
+  noteText.innerText = note.content;
   noteTitle.textContent = note.title;
   NoteWrapper.setAttribute("data-note-id", note.id);
 }

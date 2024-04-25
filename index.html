@@ -5,6 +5,12 @@
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>Nest Notes</title>
+    <style>
+        [contenteditable]:empty:after {
+            content: attr(placeholder);
+            color: #5e5e5e;
+        }
+    </style>
 </head>
 
 <body>
@@ -15,7 +21,7 @@
     </nav>
     <main>
         <h1 id="note-title" spellcheck="true" contenteditable="true"></h1>
-        <textarea id="note-text"></textarea>
+        <div id="note-text" placeholder="Enter note content..." contenteditable="true"></div>
         <button id="save-note-btn">Save</button>
     </main>
 
