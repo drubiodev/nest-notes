@@ -44,7 +44,19 @@ addNoteButton.addEventListener("click", () => {
   AddNoteToUI(note);
   // view the note
   ViewNote(note.id);
+
+  // focus on the title and highlight the text
+  noteTitle.focus();
+  selectText(noteTitle);
 });
+
+function selectText(element) {
+  var range = document.createRange(); // Create a range object
+  range.selectNodeContents(element); // Set the range to the contents of the element
+  var selection = window.getSelection(); // Get the current selection
+  selection.removeAllRanges(); // Remove all ranges from the selection
+  selection.addRange(range); // Add the range to the selection
+}
 
 // saving a note
 saveNoteButton.addEventListener("click", () => {
