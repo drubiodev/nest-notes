@@ -52,11 +52,13 @@ saveNoteButton.addEventListener("click", () => {
   // get id of the note
   const id = NoteWrapper.getAttribute("data-note-id");
   // get the note
-  const note = notes[id];
+  const note = new Note(notes[id]);
   // update the note
   note.title = noteTitle.textContent;
   note.content = noteText.value;
-  note.UpdateOnDateChange();
+
+  note.Save();
+
   // save notes to localStorage
   localStorage.setItem("notes", JSON.stringify(notes));
   // update the title div on the li
@@ -70,12 +72,12 @@ notesList.addEventListener("click", (e) => {
   if (target.tagName === "BUTTON") {
     const parent = target.parentElement;
     const id = parent.getAttribute("data-id");
-    const note = notes[id];
+    const note = new Note(notes[id]);
 
     if (target.textContent === "View") {
       ViewNote(note.id);
     } else if (target.textContent === "Delete") {
-      delete notes[id];
+      note.Delete();
       // save notes to localStorage
       localStorage.setItem("notes", JSON.stringify(notes));
       parent.remove();
@@ -93,12 +95,13 @@ notesList.addEventListener("click", (e) => {
  * @method UpdateOnDateChange - Updates the updatedAtDate property of the note
  */
 class Note {
-  constructor() {
-    this.title = "Untitled";
-    this.content = null;
-    this.id = this.#CreateID();
-    this.createdAtDate = this.#GetCurrentDateAndTime();
-    this.updatedAtDate = null;
+  constructor(noteData = {}) {
+    this.title = noteData.title ?? "Untitled";
+    this.content = noteData.content ?? "";
+    this.id = noteData.id ?? this.#CreateID();
+    this.createdAtDate =
+      noteData.createdAtDate ?? this.#GetCurrentDateAndTime();
+    this.updatedAtDate = noteData.updatedAtDate;
   }
 
   #CreateID() {
@@ -109,8 +112,17 @@ class Note {
     return new Date().toLocaleString();
   }
 
-  UpdateOnDateChange() {
+  #UpdateOnDateChange() {
     this.updatedAtDate = this.#GetCurrentDateAndTime();
+  }
+
+  Save() {
+    notes[this.id] = this;
+    this.#UpdateOnDateChange();
+  }
+
+  Delete() {
+    delete notes[this.id];
   }
 }
 

@@ -2,7 +2,7 @@
 
 ## Project Overview
 
-As an intern at Digital Nest, I want a mobile-first note taking app to efficiently record and manage my work and learnings during my internship.
+As an intern at Digital Nest, I want a note taking app to efficiently record and manage my work and learnings during my internship.
 
 The app should provide the following features:
 
@@ -87,3 +87,39 @@ debugger;
 - Use the VS Code Debugger to set breakpoints and step through your code.
 
 - Open the VS Code Debugger by clicking on the "Run and Debug" icon in the sidebar or pressing `F5`.
+
+##### nav or aside
+
+The aside element is used for content that is tangentially related to the content around it and could be considered separate from that content. It can be used for things like pull quotes or sidebars.
+
+The nav element, on the other hand, is meant to be a container for major navigational elements. If the list of notes is a major part of the navigation of your application, then nav would be more semantically correct.
+
+In the context of a note-taking app, if the list of notes is used to navigate between different notes, then a nav element would be more appropriate. This is because the list of notes is a major part of the navigation of the application.
+
+However, if the list of notes is just a feature or an additional part of the application and not a main navigational element, then an aside element would be more appropriate.
+
+##### JavaScript Classes
+
+Classes in JavaScript are a way to define objects and their behavior. They are a template for creating objects with similar properties and methods.
+
+In the context of a note-taking app, you could use classes to define the structure and behavior of notes. For example, you could create a Note class that has properties like title, content, and date, and methods like update and delete.
+
+Here's an example of how you could define a Note class in JavaScript:
+
+```javascript
+class Note {
+  constructor(title, content) {
+    this.title = title;
+    this.content = content;
+    this.date = new Date();
+  }
+}
+```
+
+##### Logical OR vs Coalescing operator
+
+The logical OR operator (`||`) and the nullish coalescing operator (`??`) are both used to provide a default value when a variable is falsy or nullish. However, they behave differently in certain cases.
+
+By using the logical OR (`||`) operator, you can assign a default value to a property if the provided value is undefined, null, or any other falsy value.
+
+However, if you want to allow properties to be 0, false, or '' (empty string), you should use the nullish coalescing operator (`??`) instead of the logical OR (`||`) operator. The nullish coalescing operator (`??`) only assigns the default value if the provided value is null or undefined.
