@@ -166,24 +166,36 @@ const searchInput = document.getElementById("search-input");
 
 searchInput.addEventListener("keyup", searchNotes);
 
-// search through notes
-// function searchNotes() {
-//   const filterWords = searchInput.value.toUpperCase().split(' ');
-//   const ul = document.getElementById("notes-list");
-//   const li = ul.getElementsByTagName("li");
+function searchNotes() {
+  const filterWords = new Set(
+    searchInput.value
+      .toUpperCase()
+      .split(" ")
+      .filter((word) => word.trim() !== "")
+  );
+  const ul = document.getElementById("notes-list");
+  const li = Array.from(ul.getElementsByTagName("li"));
 
-//   for (let i = 0; i < li.length; i++) {
-//     const id = li[i].getAttribute("data-id");
-//     const note = notes[id];
-//     const title = note.title.toUpperCase();
-//     const content = note.content ? note.content.toUpperCase() : '';
+  // If search field is blank, display all list items
+  if (searchInput.value.trim() === "") {
+    li.forEach((item) => (item.style.display = ""));
+    return;
+  }
 
-//     const noteText = title + ' ' + content;
+  const displayList = [];
 
-//     if (filterWords.some(word => noteText.indexOf(word) > -1)) {
-//       li[i].style.display = "";
-//     } else {
-//       li[i].style.display = "none";
-//     }
-//   }
-// }
+  li.forEach((item) => {
+    const id = item.getAttribute("data-id");
+    const note = notes[id];
+    const title = note.title.toUpperCase();
+    const content = note.content ? note.content.toUpperCase() : "";
+    const noteText = title + " " + content;
+
+    if (Array.from(filterWords).some((word) => noteText.includes(word))) {
+      displayList.push(item);
+    }
+  });
+
+  li.forEach((item) => (item.style.display = "none"));
+  displayList.forEach((item) => (item.style.display = ""));
+}
