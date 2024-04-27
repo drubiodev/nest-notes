@@ -48,3 +48,9 @@
 
    - talk about classes (blue prints of our note)
    - using a dictionary to store the notes
+
+`Math.random()` generates a random decimal number between 0 (inclusive) and 1 (exclusive).
+
+`.toString(36)` converts this number to a base-36 string. Base-36 uses digits and letters, so the result can be a mix of both.
+
+`.substring(2, 10)` takes a portion of this string, starting from the 3rd character (index 2) up to the 10th character (index 9).
