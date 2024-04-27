@@ -123,3 +123,5 @@ The logical OR operator (`||`) and the nullish coalescing operator (`??`) are bo
 By using the logical OR (`||`) operator, you can assign a default value to a property if the provided value is undefined, null, or any other falsy value.
 
 However, if you want to allow properties to be 0, false, or '' (empty string), you should use the nullish coalescing operator (`??`) instead of the logical OR (`||`) operator. The nullish coalescing operator (`??`) only assigns the default value if the provided value is null or undefined.
+
+##### Functions vs arrow functions
