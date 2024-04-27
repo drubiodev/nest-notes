@@ -41,3 +41,10 @@
 | ---------------- | ---------------- | ---------------- | ------------------------- |
 | Windows or Linux | Ctrl + Shift + C | Ctrl + Shift + J | F12 Ctrl + Shift + I      |
 | Mac              | Cmd + Option + C | Cmd + Option + J | Fn + F12 Cmd + Option + I |
+
+**pause for questions**
+
+6. Create a note
+
+   - talk about classes (blue prints of our note)
+   - using a dictionary to store the notes
