@@ -1,3 +1,5 @@
+import { getNotes } from "./fetch.js";
+
 // variables
 const NoteWrapper = document.querySelector("main");
 const noteTitle = document.getElementById("note-title");
@@ -5,38 +7,20 @@ const noteText = document.getElementById("note-text");
 const addNoteButton = document.getElementById("add-note-btn");
 const saveNoteButton = document.getElementById("save-note-btn");
 const notesList = document.getElementById("notes-list");
-const notes = JSON.parse(localStorage.getItem("notes")) || {};
+let notes = JSON.parse(localStorage.getItem("notes")) || {};
 
-// load notes from localStorage
-for (const id in notes) {
-  AddNoteToUI(notes[id]);
-}
+getNotes().then((myNotes) => {
+  notes = myNotes;
+  for (const id in myNotes) {
+    AddNoteToUI(myNotes[id]);
+  }
+});
 
-// // call api to get notes
-// fetch("http://localhost:8000/notes", {
-//   method: "GET",
-//   headers: {
-//     "Content-Type": "application/json",
-//   },
-// })
-//   .then((res) => res.json())
-//   .then((data) => {
-//     localStorage.setItem("notes", JSON.stringify(data));
-//   })
-//   .then(() => {
-//     for (const id in notes) {
-//       AddNoteToUI(notes[id]);
-//     }
-//   })
-//   .catch((err) => {
-//     console.log(err);
-//   });
-
-// adding a note
+// ADD NOTE
 addNoteButton.addEventListener("click", () => {
   // create a note
   const note = new Note();
-  // add note to the notes array
+  // add note to array
   notes[note.id] = note;
   // save notes to localStorage
   localStorage.setItem("notes", JSON.stringify(notes));
@@ -44,7 +28,6 @@ addNoteButton.addEventListener("click", () => {
   AddNoteToUI(note);
   // view the note
   ViewNote(note.id);
-
   // focus on the title and highlight the text
   noteTitle.focus();
   selectText(noteTitle);
@@ -172,42 +155,4 @@ function ViewNote(id) {
   noteText.innerText = note.content;
   noteTitle.textContent = note.title;
   NoteWrapper.setAttribute("data-note-id", note.id);
-}
-
-const searchInput = document.getElementById("search-input");
-
-searchInput.addEventListener("keyup", searchNotes);
-
-function searchNotes() {
-  const filterWords = new Set(
-    searchInput.value
-      .toUpperCase()
-      .split(" ")
-      .filter((word) => word.trim() !== "")
-  );
-  const ul = document.getElementById("notes-list");
-  const li = Array.from(ul.getElementsByTagName("li"));
-
-  // If search field is blank, display all list items
-  if (searchInput.value.trim() === "") {
-    li.forEach((item) => (item.style.display = ""));
-    return;
-  }
-
-  const displayList = [];
-
-  li.forEach((item) => {
-    const id = item.getAttribute("data-id");
-    const note = notes[id];
-    const title = note.title.toUpperCase();
-    const content = note.content ? note.content.toUpperCase() : "";
-    const noteText = title + " " + content;
-
-    if (Array.from(filterWords).some((word) => noteText.includes(word))) {
-      displayList.push(item);
-    }
-  });
-
-  li.forEach((item) => (item.style.display = "none"));
-  displayList.forEach((item) => (item.style.display = ""));
 }
