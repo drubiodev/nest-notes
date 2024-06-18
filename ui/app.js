@@ -1,4 +1,4 @@
-import { getNotes } from "./fetch.js";
+import { getNotes, saveNote } from "./fetch.js";
 
 // variables
 const NoteWrapper = document.querySelector("main");
@@ -53,7 +53,9 @@ saveNoteButton.addEventListener("click", () => {
   note.content = noteText.innerText;
 
   note.Save();
-
+  saveNote(note).then((res) => {
+    console.log(res);
+  });
   // save notes to localStorage
   localStorage.setItem("notes", JSON.stringify(notes));
   // update the title div on the li

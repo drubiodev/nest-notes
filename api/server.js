@@ -25,7 +25,8 @@ router.post("/notes", (req, res) => {
     body += chunk.toString(); // convert Buffer to string
   });
   req.on("end", () => {
-    notes.push(JSON.parse(body)); // add the new note to the notes array
+    const note = JSON.parse(body);
+    notes[note.id] = note; // add the new note to the notes array
     res.end(JSON.stringify(notes)); // send back the updated notes
   });
 });
