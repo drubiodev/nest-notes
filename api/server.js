@@ -15,19 +15,34 @@ router.options("*", (req, res) => {
 });
 
 router.get("/notes", (req, res) => {
-  res.writeHead(200);
-  res.end(JSON.stringify(notes));
+  new Promise((resolve, reject) => {
+    resolve(notes);
+  })
+  .then(notes => {
+    res.writeHead(200);
+    res.end(JSON.stringify(notes));
+  })
+  .catch(error => {
+    res.writeHead(500);
+    res.end(JSON.stringify({ error: "Internal Server Error" }));
+  });
 });
 
-router.post("/notes", (req, res) => {
-  let body = "";
-  req.on("data", (chunk) => {
-    body += chunk.toString(); // convert Buffer to string
-  });
-  req.on("end", () => {
-    notes.push(JSON.parse(body)); // add the new note to the notes array
+router.post("/notes", async (req, res) => {
+  try {
+    let body = "";
+    for await (const chunk of req) {
+      body += chunk.toString(); // convert Buffer to string
+    }
+    const newNote = JSON.parse(body);
+    // TODO: Validate newNote here before pushing
+    notes.push(newNote); // add the new note to the notes array
+    res.writeHead(200);
     res.end(JSON.stringify(notes)); // send back the updated notes
-  });
+  } catch (error) {
+    res.writeHead(400);
+    res.end(JSON.stringify({ error: "Invalid request" }));
+  }
 });
 
 const server = http.createServer((req, res) => {
