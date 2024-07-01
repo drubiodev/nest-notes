@@ -45,6 +45,14 @@ router.post("/notes", async (req, res) => {
   }
 });
 
+router.get('/notes/:id', (req, res, id) => {
+  res.writeHead(200);
+  res.end(JSON.stringify({ id }));
+  res.end();
+});
+
+
+
 const server = http.createServer((req, res) => {
   res.setHeader("Content-Type", "application/json");
   res.setHeader("Access-Control-Allow-Origin", "*");
